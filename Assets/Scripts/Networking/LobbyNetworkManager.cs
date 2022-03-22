@@ -19,13 +19,11 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        base.OnJoinedRoom();
         Debug.Log("Successfully joined room: " + PhotonNetwork.CurrentRoom);
     }
 
     public override void OnConnectedToMaster()
     {
-        base.OnConnectedToMaster();
         Debug.Log("Connected!");
     }
 

@@ -1,0 +1,89 @@
+{
+    "name": "ControlBindings",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "a9ed0460-91ff-439b-af5b-154fb2f79d4a",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Value",
+                    "id": "cbb8e5d6-9b06-4c67-8f11-c9cebbf5ec9d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Tap Screen",
+                    "id": "122a0240-bb99-4d1e-8804-55956bf8b2ee",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "e2ebdc54-50eb-4b13-a205-86417e47f175",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "59a91537-7246-466b-8550-dc0b43ff1cb8",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Click Screen",
+                    "id": "bd42c13c-f6ca-4571-85a8-9881c90139d1",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "f485f3a3-caf8-400e-bbda-cad17ea1673b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "59851480-d15c-4bbe-8feb-4af357ddb18a",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

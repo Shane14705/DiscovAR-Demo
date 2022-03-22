@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LobbyNetworkManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public void TryCreateRoom()
     {
-        
+        throw new NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TryJoinRoom()
     {
-        
+        throw new NotImplementedException();
     }
 }

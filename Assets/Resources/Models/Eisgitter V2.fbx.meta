@@ -3,7 +3,37 @@ guid: be6431465a6e98f499ea89058a803220
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Reflective1400A3
+    second: {fileID: 2100000, guid: 52c362b57f7d5864c946567c124cc9a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Reflective80000A
+    second: {fileID: 2100000, guid: bb685c80a68b36f44b3f256d43818d52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ReflectiveBEBEBE
+    second: {fileID: 2100000, guid: 958a309188c8e644e96acf11619f8b47, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Standard0D0CFF
+    second: {fileID: 2100000, guid: a85a1351836fc904388d9b84a6fa5518, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StandardC9514C
+    second: {fileID: 2100000, guid: c00f1267dbce81a4b8faa63499af52c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StandardFFFFFF
+    second: {fileID: 2100000, guid: 2274b8c70a33e834ebbdce70a13a5d8c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

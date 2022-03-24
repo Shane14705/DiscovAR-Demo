@@ -1,18 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class ViewerUIHandles : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject _modelOne;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private GameObject _modelTwo;
+
+    [SerializeField] private GameObject _modelThree;
+
+    [SerializeField] private ViewerNetworkManager _networkManager;
+
+    public void OnModelOneSelected()
     {
-        
-    }
+        if (_networkManager.CurrentModel != null)
+        {
+            PhotonNetwork.Destroy(_networkManager.CurrentModel);
+        }
+        PhotonNetwork.InstantiateRoomObject("MoleculeModel", Vector3.zero, Quaternion.identity, 0);
+    }    
+    
+    public void OnModelTwoSelected()
+    {
+        if (_networkManager.CurrentModel != null)
+        {
+            PhotonNetwork.Destroy(_networkManager.CurrentModel);
+        }
+        throw new NotImplementedException();
+    }    
+    
+    public void OnModelThreeSelected()
+    {
+        if (_networkManager.CurrentModel != null)
+        {
+            PhotonNetwork.Destroy(_networkManager.CurrentModel);
+        }
+        throw new NotImplementedException();
+    }    
+
 }

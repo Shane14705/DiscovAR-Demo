@@ -10,19 +10,17 @@ public class InputHandler : MonoBehaviour
     private PlayerInput _inputComponent;
     private InputAction _selectAction;
     private Camera _mainCam;
+    private ViewerNetworkManager _viewerManager;
     
     private void OnEnable()
     {
         _inputComponent = this.GetComponent<PlayerInput>();
         _selectAction = _inputComponent.actions["Select"];
-    }
-
-    private void Start()
-    {
         _mainCam = Camera.main;
         //Bind events here
         _selectAction.canceled += OnSelectionButtonReleased;
-        throw new NotImplementedException();
+        _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
+        _viewerManager.CurrentModel = this.gameObject;
     }
 
     //This function is called when the user lifts their finger/releases the mouse button
@@ -39,5 +37,7 @@ public class InputHandler : MonoBehaviour
     {
         //Unbind events here to prevent memory leaks
         _selectAction.canceled -= OnSelectionButtonReleased;
+
+        _viewerManager.CurrentModel = null;
     }
 }

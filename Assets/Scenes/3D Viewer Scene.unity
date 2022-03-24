@@ -553,6 +553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1311372317}
   - component: {fileID: 1311372316}
+  - component: {fileID: 1311372318}
   m_Layer: 0
   m_Name: ViewerNetworkManager
   m_TagString: Untagged
@@ -586,6 +587,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1311372318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311372315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1362957356
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +804,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbef8272db7c0c468915b2e66174781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _modelOne: {fileID: 8243435742977951142, guid: ddd46111b9b95834a80caddaa3f574a6, type: 3}
+  _modelTwo: {fileID: 0}
+  _modelThree: {fileID: 0}
+  _networkManager: {fileID: 1311372316}
 --- !u!1 &1589245112
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +821,7 @@ GameObject:
   - component: {fileID: 1589245115}
   - component: {fileID: 1589245114}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: ModelThreeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -863,7 +890,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1589245115}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1410746167}
+        m_TargetAssemblyTypeName: ViewerUIHandles, Assembly-CSharp
+        m_MethodName: OnModelThreeSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1589245115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,7 +1097,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1729874340}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1410746167}
+        m_TargetAssemblyTypeName: ViewerUIHandles, Assembly-CSharp
+        m_MethodName: OnModelOneSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1729874340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,7 +1161,7 @@ GameObject:
   - component: {fileID: 1729937379}
   - component: {fileID: 1729937378}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ModelTwoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1179,7 +1230,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1729937379}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1410746167}
+        m_TargetAssemblyTypeName: ViewerUIHandles, Assembly-CSharp
+        m_MethodName: OnModelTwoSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1729937379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,7 +1451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896265658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

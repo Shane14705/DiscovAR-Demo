@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyNetworkManager : MonoBehaviourPunCallbacks
@@ -20,6 +21,8 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Successfully joined room: " + PhotonNetwork.CurrentRoom);
+        //Check for AR Compatibility and open relevant scene
+        SceneManager.LoadScene("3D Viewer Scene");
     }
 
     public override void OnConnectedToMaster()

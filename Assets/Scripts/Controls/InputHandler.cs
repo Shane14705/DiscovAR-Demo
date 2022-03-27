@@ -14,7 +14,7 @@ public class InputHandler : MonoBehaviour
     private Camera _mainCam;
     private ViewerNetworkManager _viewerManager;
     [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
-    
+
     private void OnEnable()
     {
         _inputComponent = this.GetComponent<PlayerInput>();
@@ -36,7 +36,24 @@ public class InputHandler : MonoBehaviour
 
     private void OnRotateActionPerformed(InputAction.CallbackContext ctx)
     {
-        throw new NotImplementedException();
+        Debug.Log("rotating");
+        //With much help from this video it kind of makes sense to me now (I am very bad at vector math lol) https://youtu.be/kplusZYqBok
+        
+        Vector3 mouseDelta = new Vector3(ctx.ReadValue<Vector2>().x, ctx.ReadValue<Vector2>().y, 0);
+        //If dot is positive, then we are rightside up
+        if (Vector3.Dot(this.transform.up, Vector3.up) >= 0)
+        {
+            this.transform.Rotate(this.transform.up, -Vector3.Dot(mouseDelta, _mainCam.transform.right), Space.World);
+        }
+        
+        //If dot is negative, then we are upside down and need to adjust our rotation angle accordingly
+        else
+        {
+            this.transform.Rotate(this.transform.up, Vector3.Dot(mouseDelta, _mainCam.transform.right), Space.World);
+        }
+        
+        //Finally, do up/down rotation (rotate around the right axis, depending on how different our mouse delta is from our up axis)?
+        this.transform.Rotate(_mainCam.transform.right, Vector3.Dot(mouseDelta, _mainCam.transform.up), Space.World);
     }
 
     //This function is called when the user lifts their finger/releases the mouse button

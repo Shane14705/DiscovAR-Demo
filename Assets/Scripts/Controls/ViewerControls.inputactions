@@ -1,5 +1,5 @@
 {
-    "name": "ControlBindings",
+    "name": "ViewerControls",
     "maps": [
         {
             "name": "Default",
@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "566c5a57-5dc4-4d04-829c-3ac21382cb3c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -20,7 +29,7 @@
                     "name": "Tap Screen",
                     "id": "122a0240-bb99-4d1e-8804-55956bf8b2ee",
                     "path": "OneModifier",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
                     "action": "Select",
@@ -53,7 +62,7 @@
                     "name": "Click Screen",
                     "id": "bd42c13c-f6ca-4571-85a8-9881c90139d1",
                     "path": "OneModifier",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
                     "action": "Select",
@@ -79,6 +88,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Drag Touch",
+                    "id": "40e79ec2-bad9-446c-8452-72393965c3d0",
+                    "path": "OneModifier",
+                    "interactions": "Hold(duration=0.2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "a962f539-7b5e-4e7a-bbd1-6a50c63f15fa",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "4631c5d1-5f0d-4e50-8ea4-25998bf5b611",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Drag Mouse",
+                    "id": "19091792-e9ee-41c9-af35-adfdfd779116",
+                    "path": "OneModifier",
+                    "interactions": "Hold(duration=0.2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "dbf8c697-e0dd-4b00-bd53-bf2a84b247f6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "ba813fc7-0f56-48e3-bbe7-e4bc41e0e66d",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

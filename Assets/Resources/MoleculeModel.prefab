@@ -138,3 +138,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74bd9cbaf503674db26119f38b49a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _viewOffsetfromCam: {x: 0, y: 0, z: 1}

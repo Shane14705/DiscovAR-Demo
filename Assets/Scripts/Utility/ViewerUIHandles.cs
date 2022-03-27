@@ -16,8 +16,7 @@ public class ViewerUIHandles : MonoBehaviour
     [SerializeField] private ViewerNetworkManager _networkManager;
 
     [SerializeField] private RectTransform _menuPanel;
-
-    [SerializeField] private RectTransform _menuButton;
+    
 
     private bool menuOpen = true;
 
@@ -44,14 +43,14 @@ public class ViewerUIHandles : MonoBehaviour
         }
     }
 
-    private void animateCloseMenu()
+    public void animateCloseMenu()
     {
         menuOpen = false;
         _menuPanel.DOAnchorPosY(-338f, 2);
         //_menuButton.DOScaleY(-0.5f, 1);
     }
 
-    private void animateOpenMenu()
+    public void animateOpenMenu()
     {
         menuOpen = true;
         //_menuButton.DOScaleY(0.5f, 1);
@@ -65,7 +64,8 @@ public class ViewerUIHandles : MonoBehaviour
         {
             PhotonNetwork.Destroy(_networkManager.CurrentModel);
         }
-        throw new NotImplementedException();
+        
+        PhotonNetwork.InstantiateRoomObject("SaturnModel", Vector3.zero, Quaternion.identity, 0);
     }    
     
     public void OnModelThreeSelected()
@@ -75,7 +75,8 @@ public class ViewerUIHandles : MonoBehaviour
         {
             PhotonNetwork.Destroy(_networkManager.CurrentModel);
         }
-        throw new NotImplementedException();
+        
+        PhotonNetwork.InstantiateRoomObject("BrainModel", Vector3.zero, Quaternion.identity, 0);
     }    
-
+    
 }

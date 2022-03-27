@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3D Viewer Scene.unity
     guid: 96e35b72978587c44bdc3f5f3308cdcc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AR Viewer Scene.unity
     guid: daf4a4ec9ca40f34d941de581dd4f6c5
   m_configObjects:

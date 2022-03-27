@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ public class InputHandler : MonoBehaviour
     private InputAction _selectAction;
     private Camera _mainCam;
     private ViewerNetworkManager _viewerManager;
+    [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
     
     private void OnEnable()
     {
@@ -21,6 +23,12 @@ public class InputHandler : MonoBehaviour
         _selectAction.canceled += OnSelectionButtonReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.gameObject;
+        
+        FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
+        
+        
+        //TODO: REMEMBER THAT THIS LINE SHOULD ONLY RUN IF WE ARE IN 3D: AR VIEWER PLACES THE MODEL BASED ON OTHER CRITERIA
+        this.transform.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
     }
 
     //This function is called when the user lifts their finger/releases the mouse button

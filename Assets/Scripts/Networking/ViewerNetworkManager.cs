@@ -25,12 +25,7 @@ public class ViewerNetworkManager : MonoBehaviourPunCallbacks
             Debug.Log("ERROR: Made it into viewer scene without being connected to a room!");
         }
     }
-
-    [PunRPC]
-    public void LoadModel(int ModelID, PhotonMessageInfo info) 
-    {
-        
-    }
+    
     public override void OnLeftRoom()
     {
         

@@ -34,6 +34,9 @@ public class InputHandler : MonoBehaviour
         this.transform.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
     }
 
+    //TODO: Need to figure out input action setup for this--perhaps we check the delta on tap, and if its below a certain amount we assume its a tap, otherwise its a drag
+    //The above has the issue of not being able to wait until release to trigger the action, as drag should happen as it is performed while annotate should happen on release
+    //Therefore, We need a way to disambiguate which action is being intended *as fast as possible*. Perhaps by getting rid of one possibility after a certain amount of time (like with the "tap duration" for selecting)
     private void OnRotateActionPerformed(InputAction.CallbackContext ctx)
     {
         Debug.Log("rotating");

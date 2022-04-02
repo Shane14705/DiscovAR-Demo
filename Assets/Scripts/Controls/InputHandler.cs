@@ -29,13 +29,15 @@ public class InputHandler : MonoBehaviour
         _selectAction.performed += DisambiguateSelectionInput;
         _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
-        _viewerManager.CurrentModel = this.gameObject;
+        _viewerManager.CurrentModel = this.transform.parent.gameObject;
         
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
         
         
         //TODO: REMEMBER THAT THIS LINE SHOULD ONLY RUN IF WE ARE IN 3D: AR VIEWER PLACES THE MODEL BASED ON OTHER CRITERIA
-        this.transform.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
+        
+        //ALSO NOTE: ALL MOVEMENT/MANIPULATION SHOULD HAPPEN TO THE PARENT'S TRANSFORM (THIS ALLOWS FOR FIXING THE PIVOT POINTS TO THE CENTER OF THE MODEL
+        this.transform.parent.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
     }
 
     private void OnInputReleased(InputAction.CallbackContext ctx)
@@ -72,19 +74,19 @@ public class InputHandler : MonoBehaviour
         
         Vector3 mouseDelta = new Vector3(delta.x, delta.y, 0);
         //If dot is positive, then we are rightside up
-        if (Vector3.Dot(this.transform.up, Vector3.up) >= 0)
+        if (Vector3.Dot(this.transform.parent.up, Vector3.up) >= 0)
         {
-            this.transform.Rotate(this.transform.up, -Vector3.Dot(mouseDelta, _mainCam.transform.right), Space.World);
+            this.transform.parent.Rotate(this.transform.parent.up, -Vector3.Dot(mouseDelta, _mainCam.transform.right), Space.World);
         }
         
         //If dot is negative, then we are upside down and need to adjust our rotation angle accordingly
         else
         {
-            this.transform.Rotate(this.transform.up, Vector3.Dot(mouseDelta, _mainCam.transform.right), Space.World);
+            this.transform.parent.Rotate(this.transform.parent.up, Vector3.Dot(mouseDelta, _mainCam.transform.right), Space.World);
         }
         
         //Finally, do up/down rotation (rotate around the right axis, depending on how different our mouse delta is from our up axis)?
-        this.transform.Rotate(_mainCam.transform.right, Vector3.Dot(mouseDelta, _mainCam.transform.up), Space.World);
+        this.transform.parent.Rotate(_mainCam.transform.right, Vector3.Dot(mouseDelta, _mainCam.transform.up), Space.World);
     }
 
     //This function is called when the user lifts their finger/releases the mouse button

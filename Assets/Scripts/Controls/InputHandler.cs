@@ -10,20 +10,22 @@ public class InputHandler : MonoBehaviour
 {
     private PlayerInput _inputComponent;
     private InputAction _selectAction;
-    private InputAction _rotateAction;
     private Camera _mainCam;
     private ViewerNetworkManager _viewerManager;
     [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
+    [SerializeField] private float _inputDragDeadzone = 0f;
+    
+    /*TODO: NOTE THAT WE MUST NO LONGER ALLOW ANNOTATIONS TO BE MADE ON THE GIVEN INPUT ONCE A ROTATION HAS BEGUN
+     * OTHERWISE WHEN THE USER LIFTS THEIR FINGER AFTER STOPPING THE ROTATION, THEIR DELTA WOULD BE IN THE DEADZONE AGAIN AND AN ANNOTATION WOULD BE TRIGGERED
+     */
 
     private void OnEnable()
     {
         _inputComponent = this.GetComponent<PlayerInput>();
         _selectAction = _inputComponent.actions["Select"];
-        _rotateAction = _inputComponent.actions["Rotate"];
         _mainCam = Camera.main;
         //Bind events here
         _selectAction.performed += OnSelectionButtonTapped;
-        _rotateAction.performed += OnRotateActionPerformed;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.gameObject;
         
@@ -74,7 +76,6 @@ public class InputHandler : MonoBehaviour
     {
         //Unbind events here to prevent memory leaks
         _selectAction.performed -= OnSelectionButtonTapped;
-        _rotateAction.performed -= OnRotateActionPerformed;
         _viewerManager.CurrentModel = null;
     }
 }

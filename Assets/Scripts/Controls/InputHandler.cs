@@ -41,6 +41,7 @@ public class InputHandler : MonoBehaviour
     private void OnInputReleased(InputAction.CallbackContext ctx)
     {
         //If we didnt rotate, then we should place an annotation when we lift our finger
+        Debug.Log("Released! _isRotating = " + _isRotating);
         if (!_isRotating)
         {
             

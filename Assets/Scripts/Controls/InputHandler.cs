@@ -14,6 +14,7 @@ public class InputHandler : MonoBehaviour
     private ViewerNetworkManager _viewerManager;
     [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
     [SerializeField] private float _inputDragDeadzone = 0f;
+    private bool _isRotating = false;
     
     /*TODO: NOTE THAT WE MUST NO LONGER ALLOW ANNOTATIONS TO BE MADE ON THE GIVEN INPUT ONCE A ROTATION HAS BEGUN
      * OTHERWISE WHEN THE USER LIFTS THEIR FINGER AFTER STOPPING THE ROTATION, THEIR DELTA WOULD BE IN THE DEADZONE AGAIN AND AN ANNOTATION WOULD BE TRIGGERED
@@ -25,7 +26,8 @@ public class InputHandler : MonoBehaviour
         _selectAction = _inputComponent.actions["Select"];
         _mainCam = Camera.main;
         //Bind events here
-        _selectAction.performed += OnSelectionButtonTapped;
+        _selectAction.performed += DisambiguateSelectionInput;
+        _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.gameObject;
         
@@ -34,6 +36,28 @@ public class InputHandler : MonoBehaviour
         
         //TODO: REMEMBER THAT THIS LINE SHOULD ONLY RUN IF WE ARE IN 3D: AR VIEWER PLACES THE MODEL BASED ON OTHER CRITERIA
         this.transform.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
+    }
+
+    private void OnInputReleased(InputAction.CallbackContext ctx)
+    {
+        //If we didnt rotate, then we should place an annotation when we lift our finger
+        if (!_isRotating)
+        {
+            
+            Debug.Log("Placing annotation!");
+            OnCreateAnnotation(ctx);
+        }
+        _isRotating = false;
+    }
+
+    private void OnCreateAnnotation(InputAction.CallbackContext ctx)
+    {
+        //TODO: IMPLEMENT ANNOTATION PLACEMENT FUNCTION
+        Debug.Log("Input handler is trying to create an annotation!");
+        // RaycastHit selectPos = new RaycastHit(); 
+        // //Check all layers
+        // Physics.Raycast(_mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>()), 1000f, ~0);
+        throw new NotImplementedException();
     }
 
     //TODO: Need to figure out input action setup for this--perhaps we check the delta on tap, and if its below a certain amount we assume its a tap, otherwise its a drag
@@ -62,20 +86,28 @@ public class InputHandler : MonoBehaviour
     }
 
     //This function is called when the user lifts their finger/releases the mouse button
-    private void OnSelectionButtonTapped(InputAction.CallbackContext ctx)
+    private void DisambiguateSelectionInput(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Selection made!");
-        // RaycastHit selectPos = new RaycastHit(); 
-        // //Check all layers
-        // Physics.Raycast(_mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>()), 1000f, ~0);
-        //
-        // //TODO: Add logic for placing an annotation and what not
+        if (!_isRotating)
+        {
+            if (ctx.ReadValue<Vector2>().magnitude > _inputDragDeadzone)
+            {
+                _isRotating = true; 
+                OnRotateActionPerformed(ctx);
+            }
+        }
+        else
+        {
+            OnRotateActionPerformed(ctx);
+        }
+
     }
 
     private void OnDisable()
     {
         //Unbind events here to prevent memory leaks
-        _selectAction.performed -= OnSelectionButtonTapped;
+        _selectAction.performed -= DisambiguateSelectionInput;
+        _selectAction.canceled -= OnInputReleased;
         _viewerManager.CurrentModel = null;
     }
 }

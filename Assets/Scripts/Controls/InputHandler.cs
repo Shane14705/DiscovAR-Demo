@@ -53,23 +53,24 @@ public class InputHandler : MonoBehaviour
 
     private void OnCreateAnnotation(InputAction.CallbackContext ctx)
     {
+        Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();
         //TODO: IMPLEMENT ANNOTATION PLACEMENT FUNCTION
-        Debug.Log("Input handler is trying to create an annotation!");
+        Debug.Log("Input handler is trying to create an annotation at " + clickPos);
         // RaycastHit selectPos = new RaycastHit(); 
         // //Check all layers
         // Physics.Raycast(_mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>()), 1000f, ~0);
-        throw new NotImplementedException();
+        
     }
 
     //TODO: Need to figure out input action setup for this--perhaps we check the delta on tap, and if its below a certain amount we assume its a tap, otherwise its a drag
     //The above has the issue of not being able to wait until release to trigger the action, as drag should happen as it is performed while annotate should happen on release
     //Therefore, We need a way to disambiguate which action is being intended *as fast as possible*. Perhaps by getting rid of one possibility after a certain amount of time (like with the "tap duration" for selecting)
-    private void OnRotateActionPerformed(InputAction.CallbackContext ctx)
+    private void OnRotateActionPerformed(InputAction.CallbackContext ctx, Vector2 delta)
     {
         Debug.Log("rotating");
         //With much help from this video it kind of makes sense to me now (I am very bad at vector math lol) https://youtu.be/kplusZYqBok
         
-        Vector3 mouseDelta = new Vector3(ctx.ReadValue<Vector2>().x, ctx.ReadValue<Vector2>().y, 0);
+        Vector3 mouseDelta = new Vector3(delta.x, delta.y, 0);
         //If dot is positive, then we are rightside up
         if (Vector3.Dot(this.transform.up, Vector3.up) >= 0)
         {
@@ -89,17 +90,18 @@ public class InputHandler : MonoBehaviour
     //This function is called when the user lifts their finger/releases the mouse button
     private void DisambiguateSelectionInput(InputAction.CallbackContext ctx)
     {
+        Vector2 delta = ((Pointer)ctx.control.device).delta.ReadValue();
         if (!_isRotating)
         {
-            if (ctx.ReadValue<Vector2>().magnitude > _inputDragDeadzone)
+            if (delta.magnitude > _inputDragDeadzone)
             {
                 _isRotating = true; 
-                OnRotateActionPerformed(ctx);
+                OnRotateActionPerformed(ctx, delta);
             }
         }
         else
         {
-            OnRotateActionPerformed(ctx);
+            OnRotateActionPerformed(ctx, delta);
         }
 
     }

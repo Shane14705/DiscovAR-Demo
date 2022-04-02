@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Select",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "cbb8e5d6-9b06-4c67-8f11-c9cebbf5ec9d",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -41,7 +41,7 @@
                 {
                     "name": "binding",
                     "id": "59a91537-7246-466b-8550-dc0b43ff1cb8",
-                    "path": "<Touchscreen>/delta",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -74,7 +74,7 @@
                 {
                     "name": "binding",
                     "id": "59851480-d15c-4bbe-8feb-4af357ddb18a",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -16,9 +16,8 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private float _inputDragDeadzone = 0f;
     private bool _isRotating = false;
     
-    /*TODO: NOTE THAT WE MUST NO LONGER ALLOW ANNOTATIONS TO BE MADE ON THE GIVEN INPUT ONCE A ROTATION HAS BEGUN
-     * OTHERWISE WHEN THE USER LIFTS THEIR FINGER AFTER STOPPING THE ROTATION, THEIR DELTA WOULD BE IN THE DEADZONE AGAIN AND AN ANNOTATION WOULD BE TRIGGERED
-     */
+    //NOTE: IF YOU WANT TO CHANGE SENSITIVITY, IT MUST BE DONE ON EACH MODEL PREFAB AS EACH PREFAB HAS ITS OWN INPUT HANDLER
+    public float rotSensitivity = 1f;
 
     private void OnEnable()
     {
@@ -43,11 +42,8 @@ public class InputHandler : MonoBehaviour
     private void OnInputReleased(InputAction.CallbackContext ctx)
     {
         //If we didnt rotate, then we should place an annotation when we lift our finger
-        Debug.Log("Released! _isRotating = " + _isRotating);
         if (!_isRotating)
         {
-            
-            Debug.Log("Placing annotation!");
             OnCreateAnnotation(ctx);
         }
         _isRotating = false;
@@ -63,16 +59,12 @@ public class InputHandler : MonoBehaviour
         // Physics.Raycast(_mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>()), 1000f, ~0);
         
     }
-
-    //TODO: Need to figure out input action setup for this--perhaps we check the delta on tap, and if its below a certain amount we assume its a tap, otherwise its a drag
-    //The above has the issue of not being able to wait until release to trigger the action, as drag should happen as it is performed while annotate should happen on release
-    //Therefore, We need a way to disambiguate which action is being intended *as fast as possible*. Perhaps by getting rid of one possibility after a certain amount of time (like with the "tap duration" for selecting)
+    
     private void OnRotateActionPerformed(InputAction.CallbackContext ctx, Vector2 delta)
     {
-        Debug.Log("rotating");
         //With much help from this video it kind of makes sense to me now (I am very bad at vector math lol) https://youtu.be/kplusZYqBok
         
-        Vector3 mouseDelta = new Vector3(delta.x, delta.y, 0);
+        Vector3 mouseDelta = new Vector3(delta.x, delta.y, 0) * rotSensitivity;
         //If dot is positive, then we are rightside up
         if (Vector3.Dot(this.transform.parent.up, Vector3.up) >= 0)
         {

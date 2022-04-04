@@ -649,10 +649,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelOne: {fileID: 8243435742977951142, guid: ddd46111b9b95834a80caddaa3f574a6, type: 3}
   _modelTwo: {fileID: 25218506326872698, guid: 5ee626765fa83bd468d9bbc3c0b26b42, type: 3}
-  _modelThree: {fileID: 5046683805643037995, guid: d3889ab586486db4a908dd841354af81, type: 3}
+  _modelThree: {fileID: 3102964279024954798, guid: 0b3ab561f7f228e4ca7bc79eeac9b20b, type: 3}
   _networkManager: {fileID: 1311372316}
   _menuPanel: {fileID: 504437749}
-  _menuButton: {fileID: 0}
 --- !u!1 &1589245112
 GameObject:
   m_ObjectHideFlags: 0

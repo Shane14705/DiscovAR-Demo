@@ -44,19 +44,37 @@ public class InputHandler : MonoBehaviour
         //If we didnt rotate, then we should place an annotation when we lift our finger
         if (!_isRotating)
         {
-            OnCreateAnnotation(ctx);
+            OnSelectAnnotate(ctx);
         }
         _isRotating = false;
     }
 
-    private void OnCreateAnnotation(InputAction.CallbackContext ctx)
+    private void OnSelectAnnotate(InputAction.CallbackContext ctx)
     {
         Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();
         //TODO: IMPLEMENT ANNOTATION PLACEMENT FUNCTION
         Debug.Log("Input handler is trying to create an annotation at " + clickPos);
-        // RaycastHit selectPos = new RaycastHit(); 
-        // //Check all layers
-        // Physics.Raycast(_mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>()), 1000f, ~0);
+        RaycastHit selectPos = new RaycastHit(); 
+        //Check all layers
+        if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, ~0))
+        {
+            //If we hit something, check if its a model or an annotation
+            if (selectPos.collider.gameObject.CompareTag("Model"))
+            {
+                Debug.Log("Hit model collider, add an annotation!");
+            }
+            else if (selectPos.collider.gameObject.CompareTag("Annotation"))
+            {
+                Debug.Log("Hit an annotation collider, display the annotation!");
+            }
+
+        }
+
+        else
+        {
+            Debug.Log("Didnt hit anything LOL");
+        }
+        
         
     }
     
@@ -100,6 +118,8 @@ public class InputHandler : MonoBehaviour
 
     }
 
+    
+    //TODO: WE NEED TO UNLOAD ANNOTATIONS HERE SO THEY DO NOT KEEP SHOWING AFTER THE MODEL IS DESTROYED BY PHOTON
     private void OnDisable()
     {
         //Unbind events here to prevent memory leaks

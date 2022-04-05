@@ -49,6 +49,8 @@ public class InputHandler : MonoBehaviour
         _isRotating = false;
     }
 
+    //TODO: IDEA: INSTANTIATE ANNOTATIONS AS THEIR SPHERE COLLIDERS ON THEIR POSITION RELATIVE TO THE MESH ORIGIN, AND MAKE THEM ALL START HIDDEN. THEY EXIST FOR EVERYONE, BUT ARE ONLY SHOWN/HIDDEN FOR EACH INDIVIDUAL USER
+    //DONT NETWORK THE SHOW/HIDE OF THE ANNOTATION, BUT DO NETWORK THE TEXT--just only allow the player that created it to actually edit the text
     private void OnSelectAnnotate(InputAction.CallbackContext ctx)
     {
         Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();

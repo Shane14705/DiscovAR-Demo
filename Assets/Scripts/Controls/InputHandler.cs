@@ -53,13 +53,11 @@ public class InputHandler : MonoBehaviour
         }
         _isRotating = false;
     }
-
-    //TODO: IDEA: INSTANTIATE ANNOTATIONS AS THEIR SPHERE COLLIDERS ON THEIR POSITION RELATIVE TO THE MESH ORIGIN, AND MAKE THEM ALL START HIDDEN. THEY EXIST FOR EVERYONE, BUT ARE ONLY SHOWN/HIDDEN FOR EACH INDIVIDUAL USER
+    
     //DONT NETWORK THE SHOW/HIDE OF THE ANNOTATION, BUT DO NETWORK THE TEXT--just only allow the player that created it to actually edit the text
     private void OnSelectAnnotate(InputAction.CallbackContext ctx)
     {
         Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();
-        //TODO: IMPLEMENT ANNOTATION PLACEMENT FUNCTION
         Debug.Log("Input handler is trying to create an annotation at " + clickPos);
         RaycastHit selectPos = new RaycastHit(); 
         //Check all layers
@@ -69,7 +67,7 @@ public class InputHandler : MonoBehaviour
             if (selectPos.collider.gameObject.CompareTag("Model"))
             {
                 Debug.Log("Hit model collider, add an annotation!");
-                //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE DEPENDING ON THE MODEL BEING ANNOTATED
+                //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
                 //For now, however:
                 GameObject newAnnot = PhotonNetwork.Instantiate("Annotation", selectPos.point, Quaternion.identity);
                 //Dont forget to parent it to the model so it moves when model is manipulated!
@@ -78,8 +76,8 @@ public class InputHandler : MonoBehaviour
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
             {
+                //If we hit an annotation, toggle its view (later on we may want to give the option to edit it as well)
                 selectPos.collider.gameObject.GetComponent<AnnotationController>().ToggleAnnotation();
-                Debug.Log("Hit an annotation collider, display the annotation!");
             }
 
         }
@@ -138,7 +136,6 @@ public class InputHandler : MonoBehaviour
         //Destroy annotations so they dont carry over to new model
         foreach (GameObject annot in myAnnotations)
         {
-            Debug.Log("this works!");
             PhotonNetwork.Destroy(annot);
         } 
         

@@ -17,6 +17,10 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private float _inputDragDeadzone = 0f;
     private bool _isRotating = false;
     
+    //Really should split some of this into another "per model" script, but I can do that later lol
+    //this will let us keep track of this user's annotations so we can destroy them when the model is unloaded
+    private List<GameObject> myAnnotations = new List<GameObject>();
+    
     //NOTE: IF YOU WANT TO CHANGE SENSITIVITY, IT MUST BE DONE ON EACH MODEL PREFAB AS EACH PREFAB HAS ITS OWN INPUT HANDLER
     public float rotSensitivity = 1f;
 
@@ -70,6 +74,7 @@ public class InputHandler : MonoBehaviour
                 GameObject newAnnot = PhotonNetwork.Instantiate("Annotation", selectPos.point, Quaternion.identity);
                 //Dont forget to parent it to the model so it moves when model is manipulated!
                 newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
+                myAnnotations.Add(newAnnot);
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
             {
@@ -128,9 +133,15 @@ public class InputHandler : MonoBehaviour
     }
 
     
-    //TODO: WE NEED TO UNLOAD ANNOTATIONS HERE SO THEY DO NOT KEEP SHOWING AFTER THE MODEL IS DESTROYED BY PHOTON
     private void OnDisable()
     {
+        //Destroy annotations so they dont carry over to new model
+        foreach (GameObject annot in myAnnotations)
+        {
+            Debug.Log("this works!");
+            PhotonNetwork.Destroy(annot);
+        } 
+        
         //Unbind events here to prevent memory leaks
         _selectAction.performed -= DisambiguateSelectionInput;
         _selectAction.canceled -= OnInputReleased;

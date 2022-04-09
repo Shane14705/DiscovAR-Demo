@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -64,9 +65,15 @@ public class InputHandler : MonoBehaviour
             if (selectPos.collider.gameObject.CompareTag("Model"))
             {
                 Debug.Log("Hit model collider, add an annotation!");
+                //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE DEPENDING ON THE MODEL BEING ANNOTATED
+                //For now, however:
+                GameObject newAnnot = PhotonNetwork.Instantiate("Annotation", selectPos.point, Quaternion.identity);
+                //Dont forget to parent it to the model so it moves when model is manipulated!
+                newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
             {
+                selectPos.collider.gameObject.GetComponent<AnnotationController>().ToggleAnnotation();
                 Debug.Log("Hit an annotation collider, display the annotation!");
             }
 

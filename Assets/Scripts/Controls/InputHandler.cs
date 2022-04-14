@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-public class InputHandler : MonoBehaviour
+public class InputHandler : MonoBehaviourPun
 {
     private PlayerInput _inputComponent;
     private InputAction _selectAction;
@@ -16,6 +16,8 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
     [SerializeField] private float _inputDragDeadzone = 0f;
     private bool _isRotating = false;
+
+    private GameObject _annotationDialogue;
     
     //Really should split some of this into another "per model" script, but I can do that later lol
     //this will let us keep track of this user's annotations so we can destroy them when the model is unloaded
@@ -34,6 +36,7 @@ public class InputHandler : MonoBehaviour
         _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.transform.parent.gameObject;
+        _annotationDialogue = GameObject.Find("AnnotationDialogue");
         
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
         
@@ -68,11 +71,8 @@ public class InputHandler : MonoBehaviour
             {
                 Debug.Log("Hit model collider, add an annotation!");
                 //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
-                //For now, however:
-                GameObject newAnnot = PhotonNetwork.Instantiate("Annotation", selectPos.point, Quaternion.identity);
-                //Dont forget to parent it to the model so it moves when model is manipulated!
-                newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
-                myAnnotations.Add(newAnnot);
+                _annotationDialogue.SetActive(true);
+                //GameObject newAnnotation = InstantiateAnnotationRPC(selectPos.point, );
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
             {
@@ -89,7 +89,19 @@ public class InputHandler : MonoBehaviour
         
         
     }
+
     
+    [PunRPC]
+    private GameObject InstantiateAnnotationRPC(Vector3 position, string title, string description)
+    {
+        GameObject newAnnot = Instantiate(Resources.Load<GameObject>("Annotation"), position, Quaternion.identity);
+        
+        //Dont forget to parent it to the model so it moves when model is manipulated!
+        newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
+        myAnnotations.Add(newAnnot);
+        return newAnnot;
+    }
+
     private void OnRotateActionPerformed(InputAction.CallbackContext ctx, Vector2 delta)
     {
         //With much help from this video it kind of makes sense to me now (I am very bad at vector math lol) https://youtu.be/kplusZYqBok
@@ -136,7 +148,7 @@ public class InputHandler : MonoBehaviour
         //Destroy annotations so they dont carry over to new model
         foreach (GameObject annot in myAnnotations)
         {
-            PhotonNetwork.Destroy(annot);
+            Destroy(annot);
         } 
         
         //Unbind events here to prevent memory leaks

@@ -1026,7 +1026,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1251983014}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1410746167}
+        m_TargetAssemblyTypeName: ViewerUIHandles, Assembly-CSharp
+        m_MethodName: CancelAnnotationClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1251983014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,6 +1342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _networkManager: {fileID: 1311372316}
   _menuPanel: {fileID: 504437749}
+  currentHandler: {fileID: 0}
+  _annotationDialogue: {fileID: 877580476}
 --- !u!1 &1428879981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2213,7 +2227,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1849326415}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1410746167}
+        m_TargetAssemblyTypeName: ViewerUIHandles, Assembly-CSharp
+        m_MethodName: SubmitAnnotationClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1849326415
 MonoBehaviour:
   m_ObjectHideFlags: 0

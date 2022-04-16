@@ -74,7 +74,7 @@ public class InputHandler : MonoBehaviourPun
                 if (_annotationDialogue == null) Debug.Log("how");
                 _annotationDialogue.SetActive(true);
                 Debug.Log(selectPos.point.ToString());
-                _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation = selectPos.point;
+                _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation = this.transform.parent.InverseTransformPoint(selectPos.point);
                 //GameObject newAnnotation = InstantiateAnnotationRPC(selectPos.point, );
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
@@ -97,8 +97,11 @@ public class InputHandler : MonoBehaviourPun
     [PunRPC]
     private GameObject InstantiateAnnotationRPC(Vector3 position, string title, string description)
     {
-        GameObject newAnnot = Instantiate(Resources.Load<GameObject>("Annotation"), position, Quaternion.identity);
-        newAnnot.transform.localPosition = position;   
+        GameObject newAnnot = Instantiate(Resources.Load<GameObject>("Annotation"), this.transform.parent.TransformPoint(position), Quaternion.identity);
+        //newAnnot.transform.localPosition = position;   
+        Debug.LogError("Position given to RPC: " + position.ToString());
+        Debug.LogError("new local pos: " + newAnnot.transform.localPosition);
+        Debug.LogError("new world pos: " + newAnnot.transform.position);
         //Dont forget to parent it to the model so it moves when model is manipulated!
         newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
         myAnnotations.Add(newAnnot);

@@ -49,8 +49,8 @@ public class AnnotationController : MonoBehaviourPun
     // Preparation
     void OnEnable()
     {
-        this.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
-        _annotationUI = this.GetComponentInChildren<Canvas>().gameObject;
+        _annotationUI = this.transform.Find("Canvas").gameObject;
+        _annotationUI.GetComponent<Canvas>().worldCamera = Camera.main;
         _annotationUI.transform.localPosition =
             new Vector3(_left ? -1 : (1 * (_right ? 1 : 0)), (_up ? 1 : 0), 0) * UIdistanceFromAnnotation;
         

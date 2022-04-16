@@ -657,13 +657,14 @@ GameObject:
   - component: {fileID: 877580477}
   - component: {fileID: 877580479}
   - component: {fileID: 877580478}
+  - component: {fileID: 877580480}
   m_Layer: 5
   m_Name: AnnotationDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &877580477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -722,6 +723,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877580476}
   m_CullTransparentMesh: 1
+--- !u!114 &877580480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877580476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0c12ecb0272db42ae2fa44769e5c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newAnnotLocation: {x: 0, y: 0, z: 0}
 --- !u!1 &1085968171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1357,8 @@ MonoBehaviour:
   _networkManager: {fileID: 1311372316}
   _menuPanel: {fileID: 504437749}
   currentHandler: {fileID: 0}
+  _titleInput: {fileID: 1085968173}
+  _descriptionInput: {fileID: 762797222}
   _annotationDialogue: {fileID: 877580476}
 --- !u!1 &1428879981
 GameObject:

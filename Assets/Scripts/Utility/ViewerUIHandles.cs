@@ -5,6 +5,7 @@ using DG.Tweening;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ViewerUIHandles : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class ViewerUIHandles : MonoBehaviour
 
     public InputHandler currentHandler = null;
 
+    [SerializeField] private InputField _titleInput;
+    [SerializeField] private InputField _descriptionInput;
+    
     [SerializeField]
     private GameObject _annotationDialogue;
     
@@ -37,10 +41,11 @@ public class ViewerUIHandles : MonoBehaviour
 
         if (currentHandler != null)
         {
-            //TODO: FIGURE OUT WAY TO GET OUR PARAMETERS (ANNOTATION LOCATION, TITLE, AND DESCRIPTION FROM THE INPUT HANDLER TO OUR ANNOTATION DIALOGUE OR THIS FUNCTION, SO WE CAN CALL THE RPC)
-            //currentHandler.photonView.RPC("InstantiateAnnotationRPC");
+            //TODO: WE NEED A WAY TO SEND A POSITION WITH THE RPC THAT WILL SPAWN THE ANNOTATION AT THE SAME LOCATION ON THE MODEL REGARDLESS OF WHERE IT IS ROTATED ON EACH CLIENT
+            currentHandler.photonView.RPC("InstantiateAnnotationRPC", RpcTarget.AllBuffered,
+                _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation, _titleInput.text, _descriptionInput.text);
         }
-        throw new NotImplementedException();
+        
     }
 
     public void CancelAnnotationClick()

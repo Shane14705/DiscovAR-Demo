@@ -36,7 +36,7 @@ public class InputHandler : MonoBehaviourPun
         _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.transform.parent.gameObject;
-        _annotationDialogue = GameObject.Find("AnnotationDialogue");
+        _annotationDialogue = GameObject.Find("Canvas").transform.Find("AnnotationDialogue").gameObject;
         
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
         
@@ -71,7 +71,10 @@ public class InputHandler : MonoBehaviourPun
             {
                 Debug.Log("Hit model collider, add an annotation!");
                 //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
+                if (_annotationDialogue == null) Debug.Log("how");
                 _annotationDialogue.SetActive(true);
+                Debug.Log(selectPos.point.ToString());
+                _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation = selectPos.point;
                 //GameObject newAnnotation = InstantiateAnnotationRPC(selectPos.point, );
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
@@ -95,7 +98,7 @@ public class InputHandler : MonoBehaviourPun
     private GameObject InstantiateAnnotationRPC(Vector3 position, string title, string description)
     {
         GameObject newAnnot = Instantiate(Resources.Load<GameObject>("Annotation"), position, Quaternion.identity);
-        
+        newAnnot.transform.localPosition = position;   
         //Dont forget to parent it to the model so it moves when model is manipulated!
         newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
         myAnnotations.Add(newAnnot);

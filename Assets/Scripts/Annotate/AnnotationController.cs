@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 //This should go on the spawned annotation prefab, itll contain the code for hiding/showing (creating) the annotation UI, and updating the annotation info
 //Ex: onselected method to toggle ui when inputHandler detects that this annotation has been clicked
@@ -15,7 +16,8 @@ public class AnnotationController : MonoBehaviourPun
     private string _annotation_description;
 
     [SerializeField] private GameObject _annotationUI;
-    
+    [SerializeField] private Text descriptionField;
+    [SerializeField] private Text titleField;
     
     //Controls in which direction away from the annotation point will the UI be shown
     [SerializeField] private bool _up = true;
@@ -29,7 +31,7 @@ public class AnnotationController : MonoBehaviourPun
         set
         {
             _annotation_title = value;
-            //TODO: UPDATE THE TEXT COMPONENT IN THE ANNOTATION UI WHEN A NEW ANNOTATION TITLE IS SET
+            titleField.text = _annotation_title;
         }
     }
 
@@ -39,7 +41,8 @@ public class AnnotationController : MonoBehaviourPun
         set
         {
             _annotation_description = value;
-            //TODO: UPDATE THE TEXT COMPONENT IN THE ANNOTATION UI WHEN A NEW ANNOTATION DESCRIPTION IS SET
+            descriptionField.text = _annotation_description;
+           
         }
     }
 
@@ -53,7 +56,8 @@ public class AnnotationController : MonoBehaviourPun
         _annotationUI.GetComponent<Canvas>().worldCamera = Camera.main;
         _annotationUI.transform.localPosition =
             new Vector3(_left ? -1 : (1 * (_right ? 1 : 0)), (_up ? 1 : 0), 0) * UIdistanceFromAnnotation;
-        
+        descriptionField.text = _annotation_description;
+        titleField.text = _annotation_title;
     }
 
     // Cleanup

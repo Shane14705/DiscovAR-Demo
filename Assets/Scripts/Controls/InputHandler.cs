@@ -16,7 +16,8 @@ public class InputHandler : MonoBehaviourPun
     [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
     [SerializeField] private float _inputDragDeadzone = 0f;
     private bool _isRotating = false;
-
+    private bool _isMine;
+    
     private GameObject _annotationDialogue;
     
     //Really should split some of this into another "per model" script, but I can do that later lol
@@ -37,7 +38,7 @@ public class InputHandler : MonoBehaviourPun
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.transform.parent.gameObject;
         _annotationDialogue = GameObject.Find("Canvas").transform.Find("AnnotationDialogue").gameObject;
-        
+        _isMine = this.photonView.IsMine;
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
         
         
@@ -67,8 +68,9 @@ public class InputHandler : MonoBehaviourPun
         if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, ~0))
         {
             //If we hit something, check if its a model or an annotation
-            if (selectPos.collider.gameObject.CompareTag("Model"))
+            if (selectPos.collider.gameObject.CompareTag("Model") && _isMine)
             {
+                //If we own the object, add an annotation to it!
                 Debug.Log("Hit model collider, add an annotation!");
                 //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
                 if (_annotationDialogue == null) Debug.Log("how");
@@ -104,6 +106,9 @@ public class InputHandler : MonoBehaviourPun
         Debug.LogError("new world pos: " + newAnnot.transform.position);
         //Dont forget to parent it to the model so it moves when model is manipulated!
         newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
+        AnnotationController controller = newAnnot.GetComponent<AnnotationController>();
+        controller.AnnotationTitle = title;
+        controller.AnnotationDescription = description;
         myAnnotations.Add(newAnnot);
         return newAnnot;
     }

@@ -38,7 +38,7 @@ public class ViewerUIHandles : MonoBehaviour
     public void SubmitAnnotationClick()
     {
         _annotationDialogue.SetActive(false);
-
+        //TODO: Clients other than host cannot make annotations, as they have no "currentHandler" since the currentHandler is set when the model object is instantiated on the network by the host. Only the client which created the model can annotate it. Correct behavior?
         if (currentHandler != null)
         {
             //TODO: WE NEED A WAY TO SEND A POSITION WITH THE RPC THAT WILL SPAWN THE ANNOTATION AT THE SAME LOCATION ON THE MODEL REGARDLESS OF WHERE IT IS ROTATED ON EACH CLIENT

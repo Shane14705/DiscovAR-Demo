@@ -40,4 +40,9 @@ public class ViewerNetworkManager : MonoBehaviourPunCallbacks
     {
         
     }
+
+    public void leaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
 }

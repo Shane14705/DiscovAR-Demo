@@ -5,6 +5,7 @@ using DG.Tweening;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ViewerUIHandles : MonoBehaviour
@@ -104,6 +105,11 @@ public class ViewerUIHandles : MonoBehaviour
         }
         
         currentHandler = PhotonNetwork.InstantiateRoomObject("BrainPivot", Vector3.zero, Quaternion.identity, 0).GetComponentInChildren<InputHandler>();
-    }    
-    
+    }
+
+    public void OnExitClick()
+    {
+        _networkManager.leaveRoom();
+        SceneManager.LoadScene("Starting Scene");
+    }
 }

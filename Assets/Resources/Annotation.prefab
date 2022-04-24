@@ -89,8 +89,8 @@ MonoBehaviour:
   titleField: {fileID: 6804272419518308371}
   _up: 1
   _left: 0
-  _right: 1
-  UIdistanceFromAnnotation: 0.02
+  _right: 0
+  UIdistanceFromAnnotation: 0.04
   isShown: 0
 --- !u!1 &3214906589989954581
 GameObject:
@@ -131,7 +131,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 39.99, y: 39.99}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7521825924795788422
 CanvasRenderer:
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
-  m_VerticalFit: 2
+  m_VerticalFit: 1
 --- !u!114 &5135791031614968088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,10 +244,10 @@ RectTransform:
   m_Father: {fileID: 7398345714412747974}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -17.4}
-  m_SizeDelta: {x: 72, y: 52}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8345550396627798778
 CanvasRenderer:
@@ -404,7 +404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6272577191320704980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -519,10 +519,10 @@ RectTransform:
   m_Father: {fileID: 7398345714412747974}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -22.6}
-  m_SizeDelta: {x: 72, y: 52}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2768092322051854927
 CanvasRenderer:

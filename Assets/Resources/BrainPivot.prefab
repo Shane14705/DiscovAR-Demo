@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4400328370983700533}
   m_Layer: 0
   m_Name: BrainPivot
-  m_TagString: Untagged
+  m_TagString: Model
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,9 +38,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4400328370983700533}
     m_Modifications:
+    - target: {fileID: 865225168284027237, guid: d3889ab586486db4a908dd841354af81, type: 3}
+      propertyPath: m_TagString
+      value: Model
+      objectReference: {fileID: 0}
     - target: {fileID: 5046683805643037995, guid: d3889ab586486db4a908dd841354af81, type: 3}
       propertyPath: m_Name
       value: BrainModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046683805643037995, guid: d3889ab586486db4a908dd841354af81, type: 3}
+      propertyPath: m_TagString
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 5240483027594984234, guid: d3889ab586486db4a908dd841354af81, type: 3}
       propertyPath: sceneViewId
@@ -101,3 +109,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5567219357318219665, guid: d3889ab586486db4a908dd841354af81, type: 3}
   m_PrefabInstance: {fileID: 1593969448203368188}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1882240144060235673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 865225168284027237, guid: d3889ab586486db4a908dd841354af81, type: 3}
+  m_PrefabInstance: {fileID: 1593969448203368188}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6874619969707584712
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882240144060235673}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4550053333771325282, guid: a4e5c2ac15230c14694eb2f2fdca3f72, type: 3}

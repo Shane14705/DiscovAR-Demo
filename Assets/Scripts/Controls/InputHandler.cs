@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-public class InputHandler : MonoBehaviour
+public class InputHandler : MonoBehaviourPun
 {
     private PlayerInput _inputComponent;
     private InputAction _selectAction;
@@ -15,6 +16,13 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Vector3 _viewOffsetfromCam = Vector3.zero;
     [SerializeField] private float _inputDragDeadzone = 0f;
     private bool _isRotating = false;
+    private bool _isMine;
+    
+    private GameObject _annotationDialogue;
+    
+    //Really should split some of this into another "per model" script, but I can do that later lol
+    //this will let us keep track of this user's annotations so we can destroy them when the model is unloaded
+    private List<GameObject> myAnnotations = new List<GameObject>();
     
     //NOTE: IF YOU WANT TO CHANGE SENSITIVITY, IT MUST BE DONE ON EACH MODEL PREFAB AS EACH PREFAB HAS ITS OWN INPUT HANDLER
     public float rotSensitivity = 1f;
@@ -29,7 +37,8 @@ public class InputHandler : MonoBehaviour
         _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _viewerManager.CurrentModel = this.transform.parent.gameObject;
-        
+        _annotationDialogue = GameObject.Find("Canvas").transform.Find("AnnotationDialogue").gameObject;
+        _isMine = this.photonView.IsMine;
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
         
         
@@ -44,22 +53,66 @@ public class InputHandler : MonoBehaviour
         //If we didnt rotate, then we should place an annotation when we lift our finger
         if (!_isRotating)
         {
-            OnCreateAnnotation(ctx);
+            OnSelectAnnotate(ctx);
         }
         _isRotating = false;
     }
-
-    private void OnCreateAnnotation(InputAction.CallbackContext ctx)
+    
+    //DONT NETWORK THE SHOW/HIDE OF THE ANNOTATION, BUT DO NETWORK THE TEXT--just only allow the player that created it to actually edit the text
+    private void OnSelectAnnotate(InputAction.CallbackContext ctx)
     {
         Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();
-        //TODO: IMPLEMENT ANNOTATION PLACEMENT FUNCTION
         Debug.Log("Input handler is trying to create an annotation at " + clickPos);
-        // RaycastHit selectPos = new RaycastHit(); 
-        // //Check all layers
-        // Physics.Raycast(_mainCam.ScreenPointToRay(ctx.ReadValue<Vector2>()), 1000f, ~0);
+        RaycastHit selectPos = new RaycastHit(); 
+        //Check all layers
+        if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, ~0))
+        {
+            //If we hit something, check if its a model or an annotation
+            if (selectPos.collider.gameObject.CompareTag("Model") && _isMine)
+            {
+                //If we own the object, add an annotation to it!
+                Debug.Log("Hit model collider, add an annotation!");
+                //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
+                if (_annotationDialogue == null) Debug.Log("how");
+                _annotationDialogue.SetActive(true);
+                Debug.Log(selectPos.point.ToString());
+                _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation = this.transform.parent.InverseTransformPoint(selectPos.point);
+                //GameObject newAnnotation = InstantiateAnnotationRPC(selectPos.point, );
+            }
+            else if (selectPos.collider.gameObject.CompareTag("Annotation"))
+            {
+                //If we hit an annotation, toggle its view (later on we may want to give the option to edit it as well)
+                selectPos.collider.gameObject.GetComponent<AnnotationController>().ToggleAnnotation();
+            }
+
+        }
+
+        else
+        {
+            Debug.Log("Didnt hit anything LOL");
+        }
+        
         
     }
+
     
+    [PunRPC]
+    private GameObject InstantiateAnnotationRPC(Vector3 position, string title, string description)
+    {
+        GameObject newAnnot = Instantiate(Resources.Load<GameObject>("Annotation"), this.transform.parent.TransformPoint(position), Quaternion.identity);
+        //newAnnot.transform.localPosition = position;   
+        Debug.LogError("Position given to RPC: " + position.ToString());
+        Debug.LogError("new local pos: " + newAnnot.transform.localPosition);
+        Debug.LogError("new world pos: " + newAnnot.transform.position);
+        //Dont forget to parent it to the model so it moves when model is manipulated!
+        newAnnot.transform.parent = _viewerManager.CurrentModel.transform;
+        AnnotationController controller = newAnnot.GetComponent<AnnotationController>();
+        controller.AnnotationTitle = title;
+        controller.AnnotationDescription = description;
+        myAnnotations.Add(newAnnot);
+        return newAnnot;
+    }
+
     private void OnRotateActionPerformed(InputAction.CallbackContext ctx, Vector2 delta)
     {
         //With much help from this video it kind of makes sense to me now (I am very bad at vector math lol) https://youtu.be/kplusZYqBok
@@ -100,8 +153,15 @@ public class InputHandler : MonoBehaviour
 
     }
 
+    
     private void OnDisable()
     {
+        //Destroy annotations so they dont carry over to new model
+        foreach (GameObject annot in myAnnotations)
+        {
+            Destroy(annot);
+        } 
+        
         //Unbind events here to prevent memory leaks
         _selectAction.performed -= DisambiguateSelectionInput;
         _selectAction.canceled -= OnInputReleased;

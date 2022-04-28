@@ -40,12 +40,18 @@ public class InputHandler : MonoBehaviourPun
         _annotationDialogue = GameObject.Find("Canvas").transform.Find("AnnotationDialogue").gameObject;
         _isMine = this.photonView.IsMine;
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
-        
-        
-        //TODO: REMEMBER THAT THIS LINE SHOULD ONLY RUN IF WE ARE IN 3D: AR VIEWER PLACES THE MODEL BASED ON OTHER CRITERIA
-        
-        //ALSO NOTE: ALL MOVEMENT/MANIPULATION SHOULD HAPPEN TO THE PARENT'S TRANSFORM (THIS ALLOWS FOR FIXING THE PIVOT POINTS TO THE CENTER OF THE MODEL
-        this.transform.parent.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
+
+
+        //Check whether we should placed based on AR Spawn pos or in a certain predefined pos in 3D Viewer
+        if (_viewerManager._arScene && _viewerManager.sceneReady)
+        {
+            this.transform.parent.position = _viewerManager.spawnPos.transform.position;
+        }
+        else
+        {
+            //ALSO NOTE: ALL MOVEMENT/MANIPULATION SHOULD HAPPEN TO THE PARENT'S TRANSFORM (THIS ALLOWS FOR FIXING THE PIVOT POINTS TO THE CENTER OF THE MODEL
+            this.transform.parent.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
+        }
     }
 
     private void OnInputReleased(InputAction.CallbackContext ctx)

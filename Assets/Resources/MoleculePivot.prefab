@@ -42,6 +42,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6437345496876478636, guid: ddd46111b9b95834a80caddaa3f574a6, type: 3}
+      propertyPath: _inputDragDeadzone
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8243435742977951142, guid: ddd46111b9b95834a80caddaa3f574a6, type: 3}
       propertyPath: m_Name
       value: MoleculeModel

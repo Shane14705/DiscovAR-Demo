@@ -11,8 +11,7 @@ using UnityEngine.XR.ARFoundation;
 public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private InputField _enteredRoomName;
-    [SerializeField] private ARSession _arSession;
-    private bool ARSupported = false;
+    private bool ARSupported = true;
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -26,11 +25,11 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         //Check for AR Compatibility and open relevant scene
         if (ARSupported)
         {
-            SceneManager.LoadScene("AR Viewer Scene");
+            SceneManager.LoadScene("Scenes/AR Viewer Scene");
         }
         else
         {
-            SceneManager.LoadScene("3D Viewer Scene");
+            SceneManager.LoadScene("Scenes/3D Viewer Scene");
         }
     }
 
@@ -52,7 +51,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         {
             yield return ARSession.CheckAvailability();
         }
-
+    
         if (ARSession.state == ARSessionState.Unsupported)
         {
             // Start some fallback experience for unsupported devices
@@ -64,7 +63,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             ARSupported = true;
         }
     }
-
+    
     public void TryJoinRoom()
     {
         if (_enteredRoomName.text != null)

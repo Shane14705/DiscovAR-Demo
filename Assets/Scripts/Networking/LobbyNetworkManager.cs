@@ -6,11 +6,13 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.XR.ARFoundation;
 
 public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private InputField _enteredRoomName;
-    
+    [SerializeField] private ARSession _arSession;
+    private bool ARSupported = false;
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -22,7 +24,14 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Successfully joined room: " + PhotonNetwork.CurrentRoom);
         //Check for AR Compatibility and open relevant scene
-        SceneManager.LoadScene("3D Viewer Scene");
+        if (ARSupported)
+        {
+            SceneManager.LoadScene("AR Viewer Scene");
+        }
+        else
+        {
+            SceneManager.LoadScene("3D Viewer Scene");
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -36,13 +45,26 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         Debug.Log("Failed to join room: " + message);
     }
 
-    private void Start()
-    {
+    IEnumerator Start() {
         PhotonNetwork.ConnectUsingSettings();
+        if ((ARSession.state == ARSessionState.None) ||
+            (ARSession.state == ARSessionState.CheckingAvailability))
+        {
+            yield return ARSession.CheckAvailability();
+        }
+
+        if (ARSession.state == ARSessionState.Unsupported)
+        {
+            // Start some fallback experience for unsupported devices
+            ARSupported = false;
+        }
+        else
+        {
+            // Start the AR session
+            ARSupported = true;
+        }
     }
 
-    
-    
     public void TryJoinRoom()
     {
         if (_enteredRoomName.text != null)

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4400328370983700533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BrainPivot
   m_TagString: Model
   m_Icon: {fileID: 0}
@@ -39,12 +39,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 4400328370983700533}
     m_Modifications:
     - target: {fileID: 865225168284027237, guid: d3889ab586486db4a908dd841354af81, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 865225168284027237, guid: d3889ab586486db4a908dd841354af81, type: 3}
       propertyPath: m_TagString
       value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 5046683805643037995, guid: d3889ab586486db4a908dd841354af81, type: 3}
       propertyPath: m_Name
       value: BrainModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046683805643037995, guid: d3889ab586486db4a908dd841354af81, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5046683805643037995, guid: d3889ab586486db4a908dd841354af81, type: 3}
       propertyPath: m_TagString

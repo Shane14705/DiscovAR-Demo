@@ -31,11 +31,12 @@ public class InputHandler : MonoBehaviourPun
     {
         _inputComponent = this.GetComponent<PlayerInput>();
         _selectAction = _inputComponent.actions["Select"];
-        _mainCam = Camera.main;
+        
         //Bind events here
         _selectAction.performed += DisambiguateSelectionInput;
         _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
+        _mainCam = _viewerManager.sceneCam;
         _viewerManager.CurrentModel = this.transform.parent.gameObject;
         _annotationDialogue = GameObject.Find("Canvas").transform.Find("AnnotationDialogue").gameObject;
         _isMine = this.photonView.IsMine;
@@ -70,8 +71,8 @@ public class InputHandler : MonoBehaviourPun
         Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();
         Debug.Log("Input handler is trying to create an annotation at " + clickPos);
         RaycastHit selectPos = new RaycastHit(); 
-        //Check all layers
-        if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, ~0))
+        //Check model layer (layer 3)
+        if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, 1 << 3))
         {
             //If we hit something, check if its a model or an annotation
             if (selectPos.collider.gameObject.CompareTag("Model") && _isMine)

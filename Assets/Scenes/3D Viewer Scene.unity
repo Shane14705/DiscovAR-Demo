@@ -1133,6 +1133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0d11b8a097f4c4eaf1bcd329de4158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _arScene: 0
+  _arRaycastManager: {fileID: 0}
+  arCam: {fileID: 1896265660}
+  spawnPos: {fileID: 0}
+  sceneReady: 0
 --- !u!4 &1311372317
 Transform:
   m_ObjectHideFlags: 0

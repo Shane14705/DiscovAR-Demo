@@ -15,6 +15,7 @@ public class ViewerNetworkManager : MonoBehaviourPunCallbacks
 
     [SerializeField] public bool _arScene = false;
     [SerializeField] private ARRaycastManager _arRaycastManager;
+    [SerializeField] public Camera sceneCam;
     private List<ARRaycastHit> ar_hits = new List<ARRaycastHit>();
     public GameObject spawnPos;
     public bool sceneReady = false;

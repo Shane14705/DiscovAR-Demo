@@ -78,13 +78,10 @@ public class InputHandler : MonoBehaviourPun
             if (selectPos.collider.gameObject.CompareTag("Model") && _isMine)
             {
                 //If we own the object, add an annotation to it!
-                Debug.Log("Hit model collider, add an annotation!");
-                //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
                 if (_annotationDialogue == null) Debug.Log("how");
                 _annotationDialogue.SetActive(true);
-                Debug.Log(selectPos.point.ToString());
+                //Store local space position on networked storage component so we can spawn it in the correct world space pos on other clients
                 _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation = this.transform.parent.InverseTransformPoint(selectPos.point);
-                //GameObject newAnnotation = InstantiateAnnotationRPC(selectPos.point, );
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
             {

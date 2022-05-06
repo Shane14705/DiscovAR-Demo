@@ -108,7 +108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2063595437206144791, guid: 5ee626765fa83bd468d9bbc3c0b26b42, type: 3}
       propertyPath: _inputDragDeadzone
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2063595437206144791, guid: 5ee626765fa83bd468d9bbc3c0b26b42, type: 3}
       propertyPath: _viewOffsetfromCam.y

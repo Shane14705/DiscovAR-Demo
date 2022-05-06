@@ -87,10 +87,7 @@ MonoBehaviour:
   _annotationUI: {fileID: 6667081865734154131}
   descriptionField: {fileID: 4466025171940541009}
   titleField: {fileID: 6804272419518308371}
-  _up: 1
-  _left: 1
-  _right: 0
-  UIdistanceFromAnnotation: 0.1
+  UIdistanceFromAnnotation: 0.2
   isShown: 0
 --- !u!1 &3214906589989954581
 GameObject:

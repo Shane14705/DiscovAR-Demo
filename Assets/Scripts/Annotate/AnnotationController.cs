@@ -22,9 +22,9 @@ public class AnnotationController : MonoBehaviourPun
     [SerializeField] private Text titleField;
     
     //Controls in which direction away from the annotation point will the UI be shown
-    [SerializeField] private bool _up = true;
-    [SerializeField] private bool _left = false;
-    [SerializeField] private bool _right = true;
+    // [SerializeField] private bool _up = true;
+    // [SerializeField] private bool _left = false;
+    // [SerializeField] private bool _right = true;
 
     public float UIdistanceFromAnnotation = 2;
     public string AnnotationTitle
@@ -57,8 +57,7 @@ public class AnnotationController : MonoBehaviourPun
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _annotationUI = this.transform.Find("Canvas").gameObject;
         _annotationUI.GetComponent<Canvas>().worldCamera = _viewerManager.sceneCam;
-        _annotationUI.transform.localPosition =
-            new Vector3(_left ? -1 : (1 * (_right ? 1 : 0)), (_up ? 1 : 0), 0) * UIdistanceFromAnnotation;
+        _annotationUI.transform.localPosition = (_viewerManager.sceneCam.transform.position - this.transform.position).normalized * UIdistanceFromAnnotation;
         descriptionField.text = _annotation_description;
         titleField.text = _annotation_title;
     }

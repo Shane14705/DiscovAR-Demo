@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8981361920500404510}
   - component: {fileID: 6144226391216585880}
   - component: {fileID: 3556410598710158028}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Annotation
   m_TagString: Annotation
   m_Icon: {fileID: 0}
@@ -26,15 +26,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788685695469891255}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 9054355389134950305}
   - {fileID: 6272577191320704980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &8981361920500404510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,10 +87,7 @@ MonoBehaviour:
   _annotationUI: {fileID: 6667081865734154131}
   descriptionField: {fileID: 4466025171940541009}
   titleField: {fileID: 6804272419518308371}
-  _up: 1
-  _left: 0
-  _right: 0
-  UIdistanceFromAnnotation: 0.04
+  UIdistanceFromAnnotation: 0.2
   isShown: 0
 --- !u!1 &3214906589989954581
 GameObject:
@@ -105,7 +102,7 @@ GameObject:
   - component: {fileID: 165531340216608163}
   - component: {fileID: 1640014524045637919}
   - component: {fileID: 5135791031614968088}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
+  m_HorizontalFit: 1
   m_VerticalFit: 1
 --- !u!114 &5135791031614968088
 MonoBehaviour:
@@ -198,10 +195,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 2
+    m_Right: 2
+    m_Top: 1
+    m_Bottom: 1
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -222,8 +219,7 @@ GameObject:
   - component: {fileID: 8298585147596357992}
   - component: {fileID: 8345550396627798778}
   - component: {fileID: 6804272419518308371}
-  - component: {fileID: 7068827619918120259}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,8 +242,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 81, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8345550396627798778
 CanvasRenderer:
@@ -280,7 +276,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 135
@@ -291,20 +287,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: hello world!
---- !u!114 &7068827619918120259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3747686038248507281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!1 &3832508584624524112
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +298,7 @@ GameObject:
   - component: {fileID: 9054355389134950305}
   - component: {fileID: 6097557093119371926}
   - component: {fileID: 8372009146098640277}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +380,7 @@ GameObject:
   - component: {fileID: 4563620873721180551}
   - component: {fileID: 6473438628671645499}
   - component: {fileID: 533814165648772356}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,8 +479,7 @@ GameObject:
   - component: {fileID: 4921902661411394486}
   - component: {fileID: 2768092322051854927}
   - component: {fileID: 4466025171940541009}
-  - component: {fileID: 3174998321272935042}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,8 +502,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 72, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2768092322051854927
 CanvasRenderer:
@@ -566,17 +547,3 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: hello world!
---- !u!114 &3174998321272935042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7326641991969410386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2

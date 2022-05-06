@@ -11,9 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3D Viewer Scene.unity
     guid: 96e35b72978587c44bdc3f5f3308cdcc
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/AR Viewer Scene.unity
-    guid: daf4a4ec9ca40f34d941de581dd4f6c5
+    guid: 8ea9c19ef109774408376ea6eccd252c
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 51130de93f8c3c4499e7cd88005ca3b1, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 0d7718326f378bd4b8dfa81d53a5fa41, type: 2}

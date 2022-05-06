@@ -31,21 +31,28 @@ public class InputHandler : MonoBehaviourPun
     {
         _inputComponent = this.GetComponent<PlayerInput>();
         _selectAction = _inputComponent.actions["Select"];
-        _mainCam = Camera.main;
+        
         //Bind events here
         _selectAction.performed += DisambiguateSelectionInput;
         _selectAction.canceled += OnInputReleased;
         _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
+        _mainCam = _viewerManager.sceneCam;
         _viewerManager.CurrentModel = this.transform.parent.gameObject;
         _annotationDialogue = GameObject.Find("Canvas").transform.Find("AnnotationDialogue").gameObject;
         _isMine = this.photonView.IsMine;
         FindObjectOfType<ViewerUIHandles>().animateCloseMenu();
-        
-        
-        //TODO: REMEMBER THAT THIS LINE SHOULD ONLY RUN IF WE ARE IN 3D: AR VIEWER PLACES THE MODEL BASED ON OTHER CRITERIA
-        
-        //ALSO NOTE: ALL MOVEMENT/MANIPULATION SHOULD HAPPEN TO THE PARENT'S TRANSFORM (THIS ALLOWS FOR FIXING THE PIVOT POINTS TO THE CENTER OF THE MODEL
-        this.transform.parent.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
+
+
+        //Check whether we should placed based on AR Spawn pos or in a certain predefined pos in 3D Viewer
+        if (_viewerManager._arScene && _viewerManager.sceneReady)
+        {
+            this.transform.parent.position = _viewerManager.spawnPos.transform.position;
+        }
+        else
+        {
+            //ALSO NOTE: ALL MOVEMENT/MANIPULATION SHOULD HAPPEN TO THE PARENT'S TRANSFORM (THIS ALLOWS FOR FIXING THE PIVOT POINTS TO THE CENTER OF THE MODEL
+            this.transform.parent.DOMove(_mainCam.transform.position + _viewOffsetfromCam, 3);
+        }
     }
 
     private void OnInputReleased(InputAction.CallbackContext ctx)
@@ -64,20 +71,17 @@ public class InputHandler : MonoBehaviourPun
         Vector2 clickPos = ((Pointer)(ctx.control.device)).position.ReadValue();
         Debug.Log("Input handler is trying to create an annotation at " + clickPos);
         RaycastHit selectPos = new RaycastHit(); 
-        //Check all layers
-        if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, ~0))
+        //Check model layer (layer 3)
+        if (Physics.Raycast(_mainCam.ScreenPointToRay(clickPos), out selectPos, 1000f, 1 << 3))
         {
             //If we hit something, check if its a model or an annotation
             if (selectPos.collider.gameObject.CompareTag("Model") && _isMine)
             {
                 //If we own the object, add an annotation to it!
-                Debug.Log("Hit model collider, add an annotation!");
-                //TODO: CREATE UI FOR CREATION OF ANNOTATION, AND THEN SAID UI MUST HOOK BACK INTO ANNOTATION CREATION ROUTINE -- ALSO POSSIBLY ALLOW FOR ADJUSTMENT OF ANNOTATION SIZE PER MODEL PREFAB
                 if (_annotationDialogue == null) Debug.Log("how");
                 _annotationDialogue.SetActive(true);
-                Debug.Log(selectPos.point.ToString());
+                //Store local space position on networked storage component so we can spawn it in the correct world space pos on other clients
                 _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation = this.transform.parent.InverseTransformPoint(selectPos.point);
-                //GameObject newAnnotation = InstantiateAnnotationRPC(selectPos.point, );
             }
             else if (selectPos.collider.gameObject.CompareTag("Annotation"))
             {
@@ -152,7 +156,7 @@ public class InputHandler : MonoBehaviourPun
         }
 
     }
-
+    
     
     private void OnDisable()
     {

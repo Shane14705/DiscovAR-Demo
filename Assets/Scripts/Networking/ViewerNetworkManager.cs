@@ -82,7 +82,7 @@ public class ViewerNetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        
+        Debug.Log("Player entered room!");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

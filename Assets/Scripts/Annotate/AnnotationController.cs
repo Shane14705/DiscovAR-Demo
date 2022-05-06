@@ -15,6 +15,8 @@ public class AnnotationController : MonoBehaviourPun
     [SerializeField]
     private string _annotation_description;
 
+    private ViewerNetworkManager _viewerManager;
+    
     [SerializeField] private GameObject _annotationUI;
     [SerializeField] private Text descriptionField;
     [SerializeField] private Text titleField;
@@ -47,13 +49,14 @@ public class AnnotationController : MonoBehaviourPun
     }
 
     [SerializeField]
-    private bool isShown = false;
+    private bool isShown = true;
     
     // Preparation
     void OnEnable()
     {
+        _viewerManager = (ViewerNetworkManager)FindObjectOfType(typeof(ViewerNetworkManager));
         _annotationUI = this.transform.Find("Canvas").gameObject;
-        _annotationUI.GetComponent<Canvas>().worldCamera = Camera.main;
+        _annotationUI.GetComponent<Canvas>().worldCamera = _viewerManager.sceneCam;
         _annotationUI.transform.localPosition =
             new Vector3(_left ? -1 : (1 * (_right ? 1 : 0)), (_up ? 1 : 0), 0) * UIdistanceFromAnnotation;
         descriptionField.text = _annotation_description;
@@ -83,10 +86,8 @@ public class AnnotationController : MonoBehaviourPun
     private void Update()
     {
         //NOTE THAT ANNOTATIONS SHOULD BE IN WORLD SPACE ONLY FOR AR VIEWING, AND HENCE ONLY BE ROTATED IN THE AR VIEWER. FOR 3D VIEWING, A SCREEN SPACE STRATEGY MAY BE BETTER.
-        if (isShown)
-        {
-            _annotationUI.transform.LookAt(Camera.main.transform);
-        }
+        _annotationUI.transform.LookAt(_viewerManager.sceneCam.transform);
+        
     }
 
     private void hideAnnotationUI()

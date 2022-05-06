@@ -42,7 +42,7 @@ public class ViewerUIHandles : MonoBehaviour
         //TODO: Clients other than host cannot make annotations, as they have no "currentHandler" since the currentHandler is set when the model object is instantiated on the network by the host. Only the client which created the model can annotate it. Correct behavior?
         if (currentHandler != null)
         {
-            //TODO: WE NEED A WAY TO SEND A POSITION WITH THE RPC THAT WILL SPAWN THE ANNOTATION AT THE SAME LOCATION ON THE MODEL REGARDLESS OF WHERE IT IS ROTATED ON EACH CLIENT
+            
             currentHandler.photonView.RPC("InstantiateAnnotationRPC", RpcTarget.AllBuffered,
                 _annotationDialogue.GetComponent<PositionStorageComponent>().newAnnotLocation, _titleInput.text, _descriptionInput.text);
         }
@@ -52,7 +52,6 @@ public class ViewerUIHandles : MonoBehaviour
     public void CancelAnnotationClick()
     {
         _annotationDialogue.SetActive(false);
-        throw new NotImplementedException();
     }
     
     //TODO: This function should be triggered from button on annotation display UI, deletes the annotation which was being displayed. Will need a way to identify the annotation (either an ID or by title if title doesnt change) so that we can tell the input handler to find and delete the annotation from within the model's list of current annotations. Will also need to send an RPC for this most likely.
